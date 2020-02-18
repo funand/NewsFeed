@@ -1,7 +1,7 @@
 package com.example.newsfeed.UI.Service
 
 import com.example.newsfeed.UI.Models.NewsModel
-import retrofit2.Call
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,6 +11,6 @@ interface NewsService {
     fun getNewsArticles(
         @Query("country") country: String,
         @Query("apiKey") apikey: String
-    ): Call<NewsModel>
+    ): Observable<NewsModel>
 
 }

@@ -15,6 +15,7 @@ class DataAdapter(private var dataset: List<Articles>) :
 
     fun updateDataSet(newDataSet : List<Articles>){
         dataset = newDataSet
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +41,6 @@ class DataAdapter(private var dataset: List<Articles>) :
             itemView.description.text = articles.description
             itemView.url.text = articles.url
             Picasso.get().load(articles.urlToImage).into(itemView.urltoimage)
-//            itemView.pub
         }
     }
 }

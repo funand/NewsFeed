@@ -11,7 +11,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 
     var newsFeed = MutableLiveData<NewsModel>()
 
-    fun getNewsArticles() : LiveData<NewsModel> {
+    fun getNewsArticles(): LiveData<NewsModel> {
         newsRepository.getNewsModelfromNetwork()
         newsFeed = newsRepository.getNewsModel()
         Log.d("viemodel", newsFeed.value?.articles?.get(0)?.title ?: "nothing yet")
