@@ -10,8 +10,12 @@ import com.example.newsfeed.UI.Models.Articles
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.news_items.view.*
 
-class DataAdapter(private val dataset: List<Articles>) :
+class DataAdapter(private var dataset: List<Articles>) :
     RecyclerView.Adapter<DataAdapter.ViewHolder>() {
+
+    fun updateDataSet(newDataSet : List<Articles>){
+        dataset = newDataSet
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
