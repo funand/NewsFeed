@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsfeed.R
+import com.example.newsfeed.UI.Models.Articles
+import com.example.newsfeed.UI.Models.NewsModel
 import com.example.newsfeed.UI.NewsDataAdapter.DataAdapter
 import com.example.newsfeed.UI.ViewModel.NewsViewModel
 import com.example.newsfeed.databinding.ActivityMainBinding
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     private val newsViewModel: NewsViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dataSet : List<Articles>
+    private lateinit var dataAdapter : DataAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,22 +28,27 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         initRecycleView()
-
-        getData()
+        initViewModel()
     }
 
-    private fun getData() {
+    private fun initViewModel() {
         newsViewModel.getNewsArticles()
+        newsViewModel.newsFeed.observe(this@MainActivity, Observer {
+            populateUI(it)
+        })
+    }
+
+    private fun populateUI(newsModel: NewsModel) {
+        dataSet = newsModel.articles
+        dataAdapter.updateDataSet(dataSet)
     }
 
     private fun initRecycleView() {
+        dataSet = emptyList()
         var recycleview = recycleview
         recycleview.setHasFixedSize(true)
         recycleview.layoutManager = LinearLayoutManager(this)
-        val dataset = newsViewModel.newsFeed.value
-        Log.d("dataset::", dataset.toString())
-        val dataAdapter = DataAdapter(dataset!!.articles)
+        dataAdapter = DataAdapter(dataSet)
         recycleview.adapter = dataAdapter
-        newsViewModel.newsFeed.observe(this@MainActivity, Observer { dataAdapter })
     }
 }
